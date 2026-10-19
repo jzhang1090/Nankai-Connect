@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nankai Connect</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#F6F3FA;--surface:#fff;--ink:#1D1330;--muted:#6B6080;--line:#E1D9ED;--brand:#5B2A86;--on:#fff;--soft:#EEE6F7;--g1:#3A1760;--g2:#7440AA;--ok:#1F7A55;
+--sans:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;--serif:"Noto Serif SC","Songti SC",Georgia,serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#140E21;--surface:#1E1631;--ink:#F1ECF8;--muted:#A99DC0;--line:#392C52;--brand:#B58AE6;--on:#1A1028;--soft:#2C2044;--g1:#2A1048;--g2:#5B2A86;--ok:#5BC79B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#140E21;--surface:#1E1631;--ink:#F1ECF8;--muted:#A99DC0;--line:#392C52;--brand:#B58AE6;--on:#1A1028;--soft:#2C2044;--g1:#2A1048;--g2:#5B2A86;--ok:#5BC79B;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans)}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.app{max-width:560px;margin:0 auto;padding:0 16px 96px}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0}
+.logo{flex:none;width:52px;height:52px;border-radius:14px;background:var(--brand);color:var(--on);display:grid;place-items:center;font:700 1.6rem var(--serif)}
+.top h1{margin:0;font-size:1.45rem;line-height:1.15}
+.top p{margin:0;color:var(--muted);font-size:.9rem}
+.hero{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;border-radius:20px;padding:22px}
+.hero small{opacity:.85}
+.hero h2{font:700 clamp(1.8rem,8vw,2.3rem)/1.15 var(--serif);margin:8px 0 10px}
+.hero p{margin:0 0 18px;opacity:.92}
+.hero button{background:#fff;color:#4A2070;border:0;border-radius:12px;padding:12px 18px;font-weight:700;cursor:pointer}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:14px}
+.card h2{margin:0 0 4px;font-size:1.3rem}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.hd h2{margin:0}
+.link{background:none;border:0;color:var(--brand);font-weight:700;cursor:pointer;padding:4px}
+.chip{background:var(--soft);color:var(--brand);border-radius:8px;padding:4px 10px;font-size:.85rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.stat{background:var(--soft);border-radius:14px;padding:14px 6px;text-align:center}
+.stat b{display:block;font-size:2rem;line-height:1.1}
+.stat span{color:var(--muted);font-size:.9rem}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.out{background:none;border:1.5px solid var(--line);color:var(--brand);border-radius:12px;padding:11px 10px;font-weight:700;cursor:pointer}
+.full{width:100%;margin-top:12px}
+.fill{background:var(--brand);color:var(--on);border:1.5px solid var(--brand);border-radius:12px;padding:12px;font-weight:700;cursor:pointer}
+.out.on{color:var(--ok);border-color:var(--ok)}
+.row{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row>div:nth-child(2){flex:1;min-width:0}
+.row h3{margin:0;font-size:1.05rem}
+.row p{margin:0;color:var(--muted);font-size:.9rem}
+.av{flex:none;width:48px;height:48px;border-radius:50%;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:700}
+.date{flex:none;width:64px;text-align:center;background:var(--soft);color:var(--brand);border-radius:14px;padding:8px 0;font-weight:700}
+.date small{display:block;font-size:.8rem}
+.date b{font-size:1.7rem;line-height:1}
+.tag{display:inline-block;margin-top:4px;background:var(--soft);color:var(--brand);border-radius:6px;padding:2px 10px;font-size:.85rem}
+input,textarea{width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px}
+.bar{display:flex;gap:8px;margin-top:10px}
+.near{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.near select{width:auto;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 10px;font:inherit}.near span{color:var(--muted);font-size:.9rem}
+.hub{display:grid;gap:12px}.hubc{text-align:left;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--brand);border-radius:18px;padding:18px;cursor:pointer;display:grid;gap:4px}.hubc b{font-size:1.25rem}.hubc span{color:var(--muted)}
+.seg{display:flex;gap:6px;margin:10px 0}.fl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.seg button,.fl button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer}.seg button[aria-pressed=true],.fl button[aria-pressed=true]{background:var(--brand);color:var(--on);border-color:var(--brand)}
+.rec{border-top:1px solid var(--line);padding:12px 0}.rec:first-of-type{border-top:0}.rec summary{cursor:pointer;font-weight:700}.rec p,.rec ol{color:var(--muted);margin:6px 0 0}.rec ol{padding-left:20px}
+.f{display:grid;gap:10px;margin-top:10px}
+.empty{color:var(--muted);text-align:center;padding:20px 8px}
+.bub{max-width:80%;margin:6px 0 6px auto;background:var(--brand);color:var(--on);padding:8px 12px;border-radius:14px 14px 4px 14px}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs div{display:flex;width:100%;max-width:560px}
+.tabs button{flex:1;background:none;border:0;color:var(--muted);padding:6px 0;cursor:pointer;display:grid;gap:2px;justify-items:center;font-size:.75rem}
+.tabs svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-current=page]{color:var(--brand);font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;opacity:0;pointer-events:none}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div class="logo" aria-hidden="true">南</div><div style="flex:1;min-width:0"><h1 id="h1">Nankai Connect</h1><p id="tag">南开校友 · Connected for life</p></div><button class="out" id="lang" data-lang="1" aria-label="Language">中文</button></div>
+  <main id="m"></main>
+</div>
+<nav class="tabs" aria-label="Main"><div id="tabs"></div></nav>
+<div class="toast" id="toast" role="status"></div>
+<script>
+var P=[[1,"Sarah Chen","Product Manager at Google",2015,"San Francisco, CA"],[2,"David Kim","Investment Banking Analyst",2019,"New York, NY"],[3,"Lisa Wang","UX Designer at Apple",2012,"Cupertino, CA"],[4,"Emily Johnson","Marketing Director",2008,"Seattle, WA"],[5,"Wei Lin","Software Engineer at Stripe",2011,"San Jose, CA"],[6,"Mei Zhang","Research Scientist",2001,"Boston, MA"],[7,"Yan Li","Architect",2005,"Shanghai"],[8,"Jun Zhou","Data Scientist",2014,"Shanghai"],[9,"Xin Wu","Hospital Pharmacist",1999,"Beijing"],[10,"Tao Huang","Startup Founder",2010,"Singapore"],[11,"Hui Zhao","Corporate Lawyer",2013,"London"],[12,"Fang Gao","High School Teacher",2003,"Tianjin"]].map(function(a){return{id:a[0],name:a[1],role:a[2],yr:a[3],city:a[4]}});
+var E=[["NOV","15","Nankai Alumni Networking Night","San Jose, CA · 6:00–9:00 PM","In person"],["DEC","10","Careers & Innovation Panel","Online · 12:00–1:30 PM","Virtual"],["JAN","24","Lunar New Year Gathering","Cupertino, CA · 5:00–8:00 PM","In person"],["DEC","18","Shanghai alumni dinner","Shanghai · The Bund, 7:00 PM","In person"],["JAN","16","Beijing New Year reunion","Beijing · Haidian, 6:30 PM","In person"]];
+var TY=[["intern","Internships"],["full","Full-time"],["vc","VC"]],FL=["All","Biotech","Computer science","Finance"];
+var JOBS=[["intern","Biotech","Research intern","Lakeview Biosciences","South San Francisco, CA","Mei Zhang",2001],["intern","Computer science","Software engineering intern","Harbor Software","San Jose, CA","Wei Lin",2011],["intern","Finance","Summer analyst","Pinecrest Capital","New York, NY","David Kim",2019],["full","Biotech","Clinical data scientist","Lakeview Biosciences","San Diego, CA","Mei Zhang",2001],["full","Computer science","Product manager","Harbor Software","San Francisco, CA","Sarah Chen",2015],["full","Finance","Investment banking associate","Pinecrest Capital","New York, NY","David Kim",2019],["vc","Biotech","Associate, life sciences fund","Bayfront Ventures","Palo Alto, CA","Emily Johnson",2008],["vc","Computer science","Venture analyst, early stage","Northgate Ventures","San Francisco, CA","Lisa Wang",2012],["vc","Finance","Fintech investor","Redwood Capital Partners","Menlo Park, CA","Wei Lin",2011],["intern","Finance","Investment research intern","Huangpu Capital","Shanghai","Yan Li",2005],["full","Computer science","Backend engineer","Pudong Software","Shanghai","Jun Zhou",2014],["vc","Biotech","Life sciences associate","Zhangjiang Ventures","Shanghai","Jun Zhou",2014]];
+var RECIPES=[["Tomato and egg stir-fry (番茄炒蛋)","Mei Zhang, Class of 2001 · Serves 2 · 15 min","3 eggs, 3 ripe tomatoes, 1 tsp sugar, 2 scallions, salt, oil",["Beat the eggs with a pinch of salt.","Scramble in hot oil until just set, then set aside.","Fry the tomato wedges until soft and saucy, then stir in the sugar.","Return the eggs, toss with scallions and serve over rice."]],["Scallion pancakes (葱油饼)","Lisa Wang, Class of 2012 · Makes 4 · 40 min","2 cups flour, ¾ cup hot water, 4 scallions, oil, salt",["Knead the flour with the hot water and rest the dough for 30 minutes.","Roll it thin, brush with oil, sprinkle salt and scallions, then roll into a coil and flatten.","Pan-fry about 3 minutes per side until golden."]],["Pork and cabbage dumplings (饺子)","Sarah Chen, Class of 2015 · Makes about 40 · 1 hour","500 g ground pork, 400 g napa cabbage, ginger, soy sauce, sesame oil, dumpling wrappers",["Chop the cabbage, salt it, then squeeze out the water.","Mix with the pork, ginger, soy sauce and sesame oil, stirring in one direction until sticky.","Fill and pleat the wrappers.","Boil 6 to 7 minutes until they float, or pan-fry for crisp bottoms."]]];
+var DISC=[["Lotus Garden Restaurant","Cupertino, CA","10% off dinner","NANKAI10"],["Bayview Fitness","San Jose, CA","20% off the first 3 months","NKFIT20"],["Sunrise Language Studio","Online","Free first lesson","NKHELLO"],["Greenleaf Books","Online","15% off every order","NKREAD15"],["Yuyuan Tea House","Shanghai","10% off tea tasting","NKTEA10"],["Jingan Fitness","Shanghai","One free trial week","NKJA7"]];
+var G=[["Hiking","Weekend trails around the Bay Area","San Francisco, CA",42],["Hiking","Day hikes around Shanghai and Zhejiang","Shanghai",18],["Running","Saturday morning 5K and 10K runs","San Jose, CA",31],["Running","Evening runs near the Olympic Park","Beijing",26],["Pickleball","Weekly open play at local courts","Cupertino, CA",37],["Pickleball","Beginner-friendly evening games","Shanghai",9],["Badminton","Weekly doubles games","Tianjin",22],["Book club","Monthly book pick, discussed over video","Online",54]];
+var S={lang:(function(){try{var l=localStorage.getItem("ncl");if(l)return l}catch(e){}return(navigator.language||"").toLowerCase().indexOf("zh")===0?"zh":"en"})(),v:"home",q:"",near:"",finding:true,note:"",manual:0,who:0,cs:"intern",cf:"All",saved:{},groups:{},conn:{},rsvp:{},msgs:{},posts:[{n:"Emily Johnson",t:"2h ago",x:"It was wonderful meeting fellow Nankai alumni last week! Let’s keep sharing ideas and supporting each other. 💜"}]};
+try{var s=JSON.parse(localStorage.getItem("nc2")||"{}");["conn","rsvp","msgs","saved","groups"].forEach(function(k){S[k]=s[k]||S[k]});if(s.posts)S.posts=s.posts;if(s.extra)P=P.concat(s.extra)}catch(e){}
+function save(){try{localStorage.setItem("nc2",JSON.stringify({conn:S.conn,rsvp:S.rsvp,msgs:S.msgs,saved:S.saved,groups:S.groups,posts:S.posts,extra:P.filter(function(p){return p.id>=100})}))}catch(e){}}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function ini(n){return n.split(" ").map(function(w){return w[0]}).join("").slice(0,2).toUpperCase()}
+function toast(m){var t=document.getElementById("toast");t.textContent=tr(m);t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},1800)}
+function nconn(){return Object.keys(S.conn).filter(function(k){return S.conn[k]}).length}
+function person(p,btn){return'<div class="row"><div class="av" aria-hidden="true">'+ini(p.name)+'</div><div><h3>'+esc(p.name)+'</h3><p>'+esc(p.role)+' · Class of '+p.yr+'<br>'+esc(p.city)+'</p></div>'+btn+'</div>'}
+function ev(e,i){var d=S.rsvp[i];return'<div class="row"><div class="date"><small>'+e[0]+'</small><b>'+e[1]+'</b></div><div><h3>'+esc(e[2])+'</h3><p>'+esc(e[3])+'</p><span class="tag">'+e[4]+'</span></div><button class="out'+(d?" on":"")+'" data-r="'+i+'">'+(d?"Going":"RSVP")+'</button></div>'}
+function post(p){return'<div class="row"><div class="av" aria-hidden="true">'+ini(p.n)+'</div><div><h3>'+esc(p.n)+'</h3><p>'+esc(p.t)+'</p><p style="color:var(--ink);margin-top:6px">'+esc(p.x)+'</p></div></div>'}
+function base(p){return p.city.split(",")[0].trim().toLowerCase()}
+function cityList(){var c=[];function add(b){b=b.split("·")[0].split(",")[0].trim();if(b&&b!=="Online"&&c.indexOf(b)<0)c.push(b)}P.forEach(function(p){add(p.city)});E.forEach(function(e){add(e[3])});JOBS.forEach(function(j){add(j[4])});DISC.forEach(function(d){add(d[1])});G.forEach(function(g){add(g[2])});return c.sort()}
+function here(s){if(!S.near)return true;var c=s.split("·")[0].split(",")[0].trim().toLowerCase();return c==="online"||c===S.near.toLowerCase()}
+function where(nr){var o=cityList().map(function(c){return'<option value="'+esc(c)+'"'+(S.near&&c.toLowerCase()===S.near.toLowerCase()?" selected":"")+'>'+esc(c)+'</option>'}).join("");return'<div class="near"><label>City <select id="near" aria-label="City"><option value="">All cities</option>'+o+'</select></label><span>'+(S.finding?"Finding alumni near you…":S.note)+'</span></div>'}
+var ZH={
+"Home":"首页","Alumni":"校友","Events":"活动","Community":"社区","Messages":"消息","More":"更多",
+"南开校友 · Nankai alumni":"南开校友","Your Nankai network starts here.":"你的南开人脉，从这里开始。","Reconnect with classmates, discover opportunities, and build lifelong relationships.":"重新联系同学，发现机会，建立终身的情谊。","Find alumni →":"查找校友 →",
+"Your community":"你的社群","Growing together":"共同成长","Connections":"联系人","Find classmates":"找同学","Explore events":"看活动","Community feed":"社区动态",
+"Upcoming events":"近期活动","See all →":"查看全部 →","People you may know":"你可能认识的人","Meet members of the Nankai community.":"认识南开大家庭的成员。","View":"查看","Explore alumni directory":"浏览校友名录","Community updates":"社区动态更新","Open community feed":"打开社区动态",
+"Search by name, company, city or class":"按姓名、公司、城市或届别搜索","Search alumni":"搜索校友","City":"城市","All cities":"所有城市","Finding alumni near you…":"正在查找你附近的校友…","Showing alumni near you.":"正在显示你附近的校友。",
+"No alumni match your search. Try a different name, city or class year.":"没有匹配的校友。换个姓名、城市或届别试试。",
+"Connect":"建立联系","Connected":"已联系","Connection removed":"已取消联系","RSVP":"报名","Going":"已报名","RSVP saved":"已报名","RSVP cancelled":"已取消报名",
+"In person":"线下","Virtual":"线上","Online":"线上",
+"No conversations yet. Connect with an alum, then write to them here.":"还没有对话。先联系一位校友，再在这里给他们写消息。",
+"Write":"写消息","Open":"打开","Send":"发送","Write a message":"写一条消息","Message":"消息","← Messages":"← 消息",
+"Share an update with fellow alumni":"与校友分享你的近况","Post update":"发布动态","Write something to post":"先写点内容再发布","You":"你","Just now":"刚刚",
+"Internships, full-time roles and VC jobs shared by alumni":"校友分享的实习、全职和风投职位","Recipes":"食谱","Home cooking shared by alumni":"校友分享的家常菜","Alumni discounts":"校友优惠","Offers from alumni-run businesses and partners":"校友企业和合作伙伴的优惠",
+"← Community":"← 社区","Career":"职业","Internships":"实习","Full-time":"全职","VC":"风投","All":"全部","Biotech":"生物科技","Computer science":"计算机科学","Finance":"金融",
+"Save":"收藏","Saved":"已收藏","Listing saved":"已收藏","Listing removed":"已取消收藏",
+"No listings here yet. Try another field or choose All cities.":"这里暂时没有职位。试试其他领域，或选择“所有城市”。",
+"Sample listings. Alumni will post their own.":"以上为示例职位，之后将由校友自行发布。","Sample offers. Tap a code to copy it.":"以上为示例优惠，点击优惠码即可复制。",
+"Ingredients:":"食材：",
+"Join the directory":"加入校友名录","← More":"← 更多","Full name":"姓名","Class of (e.g. 2010)":"毕业年份（例如 2010）","Class year":"毕业年份","Role and company":"职位和公司","Role":"职位","Add me":"加入",
+"Enter your name, class year and city":"请填写姓名、毕业年份和城市","You’re in the directory":"你已加入校友名录","Nankai graduate":"南开校友",
+"It was wonderful meeting fellow Nankai alumni last week! Let’s keep sharing ideas and supporting each other. 💜":"上周和南开校友们见面真开心！让我们继续分享想法，互相支持。💜",
+"NOV":"11月","DEC":"12月","JAN":"1月",
+"Nankai Alumni Networking Night":"南开校友交流之夜","Careers & Innovation Panel":"职业与创新论坛","Lunar New Year Gathering":"春节聚会","Shanghai alumni dinner":"上海校友聚餐","Beijing New Year reunion":"北京新年联谊",
+"6:00–9:00 PM":"晚上6:00–9:00","12:00–1:30 PM":"中午12:00–下午1:30","5:00–8:00 PM":"下午5:00–8:00","The Bund, 7:00 PM":"外滩，晚上7:00","Haidian, 6:30 PM":"海淀，晚上6:30",
+"San Francisco, CA":"加州旧金山","New York, NY":"纽约","Cupertino, CA":"加州库比蒂诺","Seattle, WA":"华盛顿州西雅图","San Jose, CA":"加州圣何塞","Boston, MA":"马萨诸塞州波士顿","South San Francisco, CA":"加州南旧金山","San Diego, CA":"加州圣迭戈","Palo Alto, CA":"加州帕罗奥图","Menlo Park, CA":"加州门洛帕克",
+"San Francisco":"旧金山","New York":"纽约","Cupertino":"库比蒂诺","Seattle":"西雅图","San Jose":"圣何塞","Boston":"波士顿","South San Francisco":"南旧金山","San Diego":"圣迭戈","Palo Alto":"帕罗奥图","Menlo Park":"门洛帕克","Shanghai":"上海","Beijing":"北京","Singapore":"新加坡","London":"伦敦","Tianjin":"天津",
+"Product Manager at Google":"谷歌产品经理","Investment Banking Analyst":"投资银行分析师","UX Designer at Apple":"苹果用户体验设计师","Marketing Director":"市场总监","Software Engineer at Stripe":"Stripe 软件工程师","Research Scientist":"研究科学家","Architect":"建筑师","Data Scientist":"数据科学家","Hospital Pharmacist":"医院药剂师","Startup Founder":"创业者","Corporate Lawyer":"企业律师","High School Teacher":"中学教师",
+"Wei Lin":"林伟","Mei Zhang":"张梅","Yan Li":"李燕","Jun Zhou":"周俊","Xin Wu":"吴欣","Tao Huang":"黄涛","Hui Zhao":"赵慧","Fang Gao":"高芳",
+"WL":"林","MZ":"张","YL":"李","JZ":"周","XW":"吴","TH":"黄","HZ":"赵","FG":"高",
+"Research intern":"研究实习生","Software engineering intern":"软件工程实习生","Summer analyst":"暑期分析师","Clinical data scientist":"临床数据科学家","Product manager":"产品经理","Investment banking associate":"投资银行经理","Associate, life sciences fund":"生命科学基金投资经理","Venture analyst, early stage":"早期投资分析师","Fintech investor":"金融科技投资人","Investment research intern":"投资研究实习生","Backend engineer":"后端工程师","Life sciences associate":"生命科学投资经理",
+"Tomato and egg stir-fry (番茄炒蛋)":"番茄炒蛋","Scallion pancakes (葱油饼)":"葱油饼","Pork and cabbage dumplings (饺子)":"猪肉白菜饺子",
+"3 eggs, 3 ripe tomatoes, 1 tsp sugar, 2 scallions, salt, oil":"3个鸡蛋、3个熟番茄、1茶匙糖、2根葱、盐、油",
+"Beat the eggs with a pinch of salt.":"鸡蛋加一小撮盐打散。","Scramble in hot oil until just set, then set aside.":"热油下锅炒至刚凝固，盛出备用。","Fry the tomato wedges until soft and saucy, then stir in the sugar.":"番茄块煎至软烂出汁，加入糖拌匀。","Return the eggs, toss with scallions and serve over rice.":"倒回鸡蛋，加葱花翻炒，盖在米饭上食用。",
+"2 cups flour, ¾ cup hot water, 4 scallions, oil, salt":"2杯面粉、¾杯热水、4根葱、油、盐",
+"Knead the flour with the hot water and rest the dough for 30 minutes.":"用热水和面，醒面30分钟。","Roll it thin, brush with oil, sprinkle salt and scallions, then roll into a coil and flatten.":"擀薄，刷油，撒盐和葱花，卷成卷再盘起压平。","Pan-fry about 3 minutes per side until golden.":"每面煎约3分钟至金黄。",
+"500 g ground pork, 400 g napa cabbage, ginger, soy sauce, sesame oil, dumpling wrappers":"猪肉馅500克、大白菜400克、姜、酱油、香油、饺子皮",
+"Chop the cabbage, salt it, then squeeze out the water.":"白菜切碎，加盐腌后挤出水分。","Mix with the pork, ginger, soy sauce and sesame oil, stirring in one direction until sticky.":"与猪肉、姜、酱油和香油拌匀，顺一个方向搅拌至上劲。","Fill and pleat the wrappers.":"包馅并捏出褶。","Boil 6 to 7 minutes until they float, or pan-fry for crisp bottoms.":"水煮6至7分钟至浮起，或煎至底部酥脆。",
+"Lotus Garden Restaurant":"莲花园餐厅","Bayview Fitness":"海景健身","Sunrise Language Studio":"旭日语言工作室","Greenleaf Books":"绿叶书店","Yuyuan Tea House":"豫园茶舍","Jingan Fitness":"静安健身",
+"10% off dinner":"晚餐9折","20% off the first 3 months":"前3个月8折","Free first lesson":"首课免费","15% off every order":"每单85折","10% off tea tasting":"品茶9折","One free trial week":"免费体验一周",
+"Finding alumni near you…":"正在查找你附近的校友…","Interest groups":"兴趣小组","Hiking, running, pickleball and more":"徒步、跑步、匹克球等","Hiking":"徒步","Running":"跑步","Pickleball":"匹克球","Badminton":"羽毛球","Book club":"读书会","Join":"加入","Joined":"已加入","Joined group":"已加入小组","Left group":"已退出小组",
+"Weekend trails around the Bay Area":"湾区周末徒步路线","Day hikes around Shanghai and Zhejiang":"上海及浙江周边一日徒步","Saturday morning 5K and 10K runs":"周六早晨5公里和10公里跑","Evening runs near the Olympic Park":"奥林匹克公园附近的夜跑","Weekly open play at local courts":"每周在本地球场自由对打","Beginner-friendly evening games":"适合新手的晚间对局","Weekly doubles games":"每周双打比赛","Monthly book pick, discussed over video":"每月选一本书，视频讨论",
+"Sample groups. Alumni will start their own.":"以上为示例小组，之后将由校友自行创建。","Language":"语言"};
+function tr1(k){if(Object.prototype.hasOwnProperty.call(ZH,k))return ZH[k];
+if(k.indexOf(" · ")>=0)return k.split(" · ").map(tr1).join(" · ");
+var m;
+if(m=k.match(/^Class of (\d+)$/))return m[1]+"届";
+if(m=k.match(/^Shared by (.+), Class of (\d+)$/))return"分享者："+tr1(m[1])+"，"+m[2]+"届";
+if(m=k.match(/^(.+), Class of (\d+)$/))return tr1(m[1])+"，"+m[2]+"届";
+if(m=k.match(/^Serves (\d+)$/))return m[1]+"人份";
+if(m=k.match(/^Makes about (\d+)$/))return"约"+m[1]+"个";
+if(m=k.match(/^Makes (\d+)$/))return m[1]+"个";
+if(m=k.match(/^(\d+) min$/))return m[1]+"分钟";
+if(m=k.match(/^(\d+) hour$/))return m[1]+"小时";
+if(m=k.match(/^(\d+)h ago$/))return m[1]+"小时前";
+if(m=k.match(/^(Alumni discounts|Interest groups|Alumni|Events|Career) in (.+)$/))return tr1(m[2])+"的"+tr1(m[1]);
+if(m=k.match(/^No alumni in (.+) yet\. Showing everyone\.$/))return tr1(m[1])+"暂无校友，已显示全部校友。";
+if(m=k.match(/^No events in (.+) yet\. Choose All cities to see everything\.$/))return tr1(m[1])+"暂无活动。选择“所有城市”查看全部。";
+if(m=k.match(/^No offers in (.+) yet\. Choose All cities to see everything\.$/))return tr1(m[1])+"暂无优惠。选择“所有城市”查看全部。";
+if(m=k.match(/^(\d+) members$/))return m[1]+"位成员";
+if(m=k.match(/^No groups in (.+) yet\. Choose All cities to see everything\.$/))return tr1(m[1])+"暂无小组。选择“所有城市”查看全部。";
+if(m=k.match(/^Say hello to (.+)\.$/))return"向"+tr1(m[1])+"问个好吧。";
+if(m=k.match(/^Code (.+) copied$/))return"已复制优惠码 "+m[1];
+if(m=k.match(/^Code: (.+)$/))return"优惠码："+m[1];
+return k}
+function tr(s){if(S.lang!=="zh")return s;var k=s.trim();if(!k)return s;return s.match(/^\s*/)[0]+tr1(k)+s.match(/\s*$/)[0]}
+function applyLang(){var z=S.lang==="zh";document.documentElement.lang=z?"zh-Hans":"en";document.title=z?"南开连接":"Nankai Connect";
+document.getElementById("h1").textContent=z?"南开连接":"Nankai Connect";
+document.getElementById("tag").textContent=z?"南开校友 · 终身相连":"南开校友 · Connected for life";
+var lb=document.getElementById("lang");lb.textContent=z?"EN":"中文";lb.setAttribute("aria-label",z?"语言":"Language");
+if(!z)return;
+[document.getElementById("m"),document.getElementById("tabs")].forEach(function(root){
+var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n,list=[];while(n=w.nextNode())list.push(n);
+list.forEach(function(n){n.nodeValue=tr(n.nodeValue)});
+root.querySelectorAll("[placeholder],[aria-label]").forEach(function(el){["placeholder","aria-label"].forEach(function(a){var v=el.getAttribute(a);if(v)el.setAttribute(a,tr(v))})})})}
+var V={
+home:function(){return'<section class="hero"><small>南开校友 · Nankai alumni</small><h2>Your Nankai network starts here.</h2><p>Reconnect with classmates, discover opportunities, and build lifelong relationships.</p><button data-go="alumni">Find alumni →</button></section>'+
+'<section class="card"><div class="hd"><h2>Your community</h2><span class="chip">Growing together</span></div><div class="stats"><div class="stat"><b>'+P.length+'</b><span>Alumni</span></div><div class="stat"><b>'+nconn()+'</b><span>Connections</span></div><div class="stat"><b>'+E.length+'</b><span>Events</span></div></div><div class="acts"><button class="out" data-go="alumni">Find classmates</button><button class="out" data-go="events">Explore events</button><button class="out" data-go="messages">Messages</button><button class="out" data-go="feed">Community feed</button></div></section>'+
+'<section class="card"><div class="hd"><h2>Upcoming events</h2><button class="link" data-go="events">See all →</button></div>'+E.slice(0,2).map(ev).join("")+'</section>'+
+'<section class="card"><h2>People you may know</h2><p style="color:var(--muted);margin:0 0 4px">Meet members of the Nankai community.</p>'+P.slice(0,3).map(function(p){return person(p,'<button class="out" data-view="'+p.id+'">View</button>')}).join("")+'<button class="fill full" data-go="alumni">Explore alumni directory</button></section>'+
+'<section class="card"><h2>Community updates</h2>'+post(S.posts[0])+'<button class="out full" data-go="feed">Open community feed</button></section>'},
+alumni:function(){var q=S.q.toLowerCase(),nr=S.near&&P.some(function(p){return base(p)===S.near.toLowerCase()}),r=P.filter(function(p){return(!nr||base(p)===S.near.toLowerCase())&&(!q||(p.name+p.role+p.city+p.yr).toLowerCase().indexOf(q)>=0)});
+return'<h2 style="margin:4px 0 10px">Alumni'+(nr?' in '+esc(S.near):"")+'</h2>'+where(nr)+'<input id="q" type="search" placeholder="Search by name, company, city or class" aria-label="Search alumni" value="'+esc(S.q)+'"><section class="card" style="margin-top:12px">'+(r.length?r.map(function(p){var c=S.conn[p.id];return person(p,'<button class="out'+(c?" on":"")+'" data-c="'+p.id+'">'+(c?"Connected":"Connect")+'</button>')}).join(""):'<div class="empty">No alumni match your search. Try a different name, city or class year.</div>')+'</section>'},
+events:function(){var rs=E.map(function(e,i){return{e:e,i:i}}).filter(function(o){return here(o.e[3])});return'<h2 style="margin:4px 0 10px">Events'+(S.near?' in '+esc(S.near):"")+'</h2>'+where(!!S.near)+'<section class="card" style="margin-top:0">'+(rs.length?rs.map(function(o){return ev(o.e,o.i)}).join(""):'<div class="empty">No events in '+esc(S.near)+' yet. Choose All cities to see everything.</div>')+'</section>'},
+messages:function(){var c=P.filter(function(p){return S.conn[p.id]});return'<h2 style="margin:4px 0 10px">Messages</h2><section class="card" style="margin-top:0">'+(c.length?c.map(function(p){var m=S.msgs[p.id]||[];return person(p,'<button class="out" data-t="'+p.id+'">'+(m.length?"Open":"Write")+'</button>')}).join(""):'<div class="empty">No conversations yet. Connect with an alum, then write to them here.</div>')+'</section>'},
+thread:function(){var p=P.filter(function(x){return x.id==S.who})[0],m=S.msgs[S.who]||[];return'<button class="link" data-go="messages">← Messages</button><section class="card" style="margin-top:6px">'+person(p,"")+(m.length?m.map(function(x){return'<div class="bub">'+esc(x)+'</div>'}).join(""):'<div class="empty">Say hello to '+esc(p.name.split(" ")[0])+'.</div>')+'<div class="bar"><input id="mi" placeholder="Write a message" aria-label="Message"><button class="fill" data-send="1">Send</button></div></section>'},
+feed:function(){return'<h2 style="margin:4px 0 10px">Community feed</h2><section class="card" style="margin-top:0"><textarea id="pi" rows="2" placeholder="Share an update with fellow alumni"></textarea><button class="fill full" data-post="1">Post update</button></section><section class="card">'+S.posts.map(post).join("")+'</section>'},
+community:function(){return'<h2 style="margin:4px 0 10px">Community</h2><div class="hub">'+[["career","Career","Internships, full-time roles and VC jobs shared by alumni"],["recipes","Recipes","Home cooking shared by alumni"],["groups","Interest groups","Hiking, running, pickleball and more"],["discounts","Alumni discounts","Offers from alumni-run businesses and partners"]].map(function(c){return'<button class="hubc" data-go="'+c[0]+'"><b>'+c[1]+'</b><span>'+c[2]+'</span></button>'}).join("")+'</div>'},
+career:function(){var rs=JOBS.map(function(j,i){return{j:j,i:i}}).filter(function(o){return o.j[0]===S.cs&&(S.cf==="All"||o.j[1]===S.cf)&&here(o.j[4])});
+return'<button class="link" data-go="community">← Community</button><h2 style="margin:4px 0 0">Career'+(S.near?' in '+esc(S.near):"")+'</h2>'+where(!!S.near)+'<div class="seg">'+TY.map(function(t){return'<button data-cs="'+t[0]+'" aria-pressed="'+(S.cs===t[0])+'">'+t[1]+'</button>'}).join("")+'</div><div class="fl">'+FL.map(function(f){return'<button data-fld="'+f+'" aria-pressed="'+(S.cf===f)+'">'+f+'</button>'}).join("")+'</div><section class="card" style="margin-top:8px">'+(rs.length?rs.map(function(o){var j=o.j,d=S.saved[o.i];return'<div class="row"><div style="flex:1;min-width:0"><h3>'+j[2]+'</h3><p>'+j[3]+' · '+j[4]+'</p><p>Shared by '+j[5]+', Class of '+j[6]+'</p><span class="tag">'+j[1]+'</span></div><button class="out'+(d?" on":"")+'" data-sv="'+o.i+'">'+(d?"Saved":"Save")+'</button></div>'}).join(""):'<div class="empty">No listings here yet. Try another field or choose All cities.</div>')+'</section><p class="empty" style="padding-top:8px">Sample listings. Alumni will post their own.</p>'},
+recipes:function(){return'<button class="link" data-go="community">← Community</button><h2 style="margin:4px 0 10px">Recipes</h2><section class="card" style="margin-top:0">'+RECIPES.map(function(r){return'<details class="rec"><summary>'+r[0]+'</summary><p>'+r[1]+'</p><p><b>Ingredients:</b> '+r[2]+'</p><ol>'+r[3].map(function(s){return'<li>'+s+'</li>'}).join("")+'</ol></details>'}).join("")+'</section>'},
+groups:function(){var rs=G.map(function(g,i){return{g:g,i:i}}).filter(function(o){return here(o.g[2])});
+return'<button class="link" data-go="community">← Community</button><h2 style="margin:4px 0 0">Interest groups'+(S.near?' in '+esc(S.near):"")+'</h2>'+where(!!S.near)+'<section class="card" style="margin-top:8px">'+(rs.length?rs.map(function(o){var g=o.g,j=S.groups[o.i];return'<div class="row"><div style="flex:1;min-width:0"><h3>'+g[0]+'</h3><p>'+g[1]+'</p><p>'+g[2]+' · '+(g[3]+(j?1:0))+' members</p></div><button class="out'+(j?" on":"")+'" data-g="'+o.i+'">'+(j?"Joined":"Join")+'</button></div>'}).join(""):'<div class="empty">No groups in '+esc(S.near)+' yet. Choose All cities to see everything.</div>')+'</section><p class="empty" style="padding-top:8px">Sample groups. Alumni will start their own.</p>'},
+discounts:function(){return'<button class="link" data-go="community">← Community</button><h2 style="margin:4px 0 10px">Alumni discounts'+(S.near?' in '+esc(S.near):"")+'</h2>'+where(!!S.near)+'<section class="card" style="margin-top:0">'+(DISC.filter(function(d){return here(d[1])}).map(function(d){return'<div class="row"><div style="flex:1;min-width:0"><h3>'+d[0]+'</h3><p>'+d[2]+' · '+d[1]+'</p></div><button class="out" data-cp="'+d[3]+'">'+d[3]+'</button></div>'}).join("")||'<div class="empty">No offers in '+esc(S.near)+' yet. Choose All cities to see everything.</div>')+'</section><p class="empty" style="padding-top:8px">Sample offers. Tap a code to copy it.</p>'},
+more:function(){return'<h2 style="margin:4px 0 10px">More</h2><section class="card" style="margin-top:0"><button class="out full" style="margin:0 0 10px" data-go="feed">Community feed</button><button class="out full" style="margin:0" data-go="join">Join the directory</button></section>'},
+join:function(){return'<button class="link" data-go="more">← More</button><section class="card" style="margin-top:6px"><h2>Join the directory</h2><div class="f"><input id="jn" placeholder="Full name" autocomplete="name" aria-label="Full name"><input id="jy" type="number" placeholder="Class of (e.g. 2010)" aria-label="Class year"><input id="jc" placeholder="City" aria-label="City"><input id="jr" placeholder="Role and company" aria-label="Role"><button class="fill" data-join="1">Add me</button></div></section>'}};
+var TABS=[["home","Home",'<path d="M4 11l8-7 8 7v9H4z"/>'],["alumni","Alumni",'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>'],["events","Events",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'],["community","Community",'<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c.6-3.5 3-5 6-5s5.4 1.5 6 5M16 15c3 0 4.5 1.5 5 4"/>'],["messages","Messages",'<path d="M4 5h16v11H9l-5 4z"/>'],["more","More",'<path d="M4 7h16M4 12h16M4 17h16"/>']];
+var OWN={thread:"messages",feed:"more",join:"more",career:"community",recipes:"community",discounts:"community",groups:"community"};
+function render(){document.getElementById("m").innerHTML=V[S.v]();var cur=OWN[S.v]||S.v;
+ document.getElementById("tabs").innerHTML=TABS.map(function(t){return'<button data-go="'+t[0]+'"'+(t[0]===cur?' aria-current="page"':"")+'><svg viewBox="0 0 24 24" aria-hidden="true">'+t[2]+'</svg>'+t[1]+'</button>'}).join("");
+ applyLang();window.scrollTo(0,0)}
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var d=b.dataset;
+ if(d.lang){S.lang=S.lang==="zh"?"en":"zh";try{localStorage.setItem("ncl",S.lang)}catch(x){}var y0=window.scrollY;render();window.scrollTo(0,y0)}
+ else if(d.go){S.v=d.go;if(d.go!=="alumni")S.q="";render()}
+ else if(d.view){S.near="";S.manual=1;S.q=P.filter(function(p){return p.id==d.view})[0].name;S.v="alumni";render()}
+ else if(d.c){S.conn[d.c]=!S.conn[d.c];save();toast(S.conn[d.c]?"Connected":"Connection removed");var y=window.scrollY;render();window.scrollTo(0,y)}
+ else if(d.r){S.rsvp[d.r]=!S.rsvp[d.r];save();toast(S.rsvp[d.r]?"RSVP saved":"RSVP cancelled");var y2=window.scrollY;render();window.scrollTo(0,y2)}
+ else if(d.cs){S.cs=d.cs;var y4=window.scrollY;render();window.scrollTo(0,y4)}
+ else if(d.fld){S.cf=d.fld;var y5=window.scrollY;render();window.scrollTo(0,y5)}
+ else if(d.sv){S.saved[d.sv]=!S.saved[d.sv];save();toast(S.saved[d.sv]?"Listing saved":"Listing removed");var y6=window.scrollY;render();window.scrollTo(0,y6)}
+ else if(d.g){S.groups[d.g]=!S.groups[d.g];save();toast(S.groups[d.g]?"Joined group":"Left group");var y7=window.scrollY;render();window.scrollTo(0,y7)}
+ else if(d.cp){try{navigator.clipboard.writeText(d.cp);toast("Code "+d.cp+" copied")}catch(x){toast("Code: "+d.cp)}}
+ else if(d.t){S.who=d.t;S.v="thread";render()}
+ else if(d.send){var i=document.getElementById("mi"),v=i.value.trim();if(!v)return;(S.msgs[S.who]=S.msgs[S.who]||[]).push(v);save();render()}
+ else if(d.post){var t=document.getElementById("pi"),x=t.value.trim();if(!x){toast("Write something to post");return}S.posts.unshift({n:"You",t:"Just now",x:x});save();render()}
+ else if(d.join){var g=function(k){return document.getElementById(k).value.trim()},y3=parseInt(g("jy"),10);if(!g("jn")||!y3||!g("jc")){toast("Enter your name, class year and city");return}
+  S.near="";S.manual=1;P.push({id:100+P.length,name:g("jn"),yr:y3,city:g("jc"),role:g("jr")||"Nankai graduate"});save();S.v="alumni";S.q="";toast("You’re in the directory");render()}});
+document.addEventListener("input",function(e){if(e.target.id==="q"){S.q=e.target.value;var pos=e.target.selectionStart;render();var n=document.getElementById("q");n.focus();n.setSelectionRange(pos,pos)}});
+document.addEventListener("change",function(e){if(e.target.id==="near"){S.near=e.target.value;S.manual=1;S.finding=false;S.note="";render()}});
+function detect(){var done=false;
+function use(city){if(done||S.manual)return;done=true;S.finding=false;var c=(city||"").trim();if(c&&P.some(function(p){return base(p)===c.toLowerCase()})){S.near=c;S.note="Showing alumni near you."}else if(c){S.note="No alumni in "+c+" yet. Showing everyone."}else{S.note=""}if(["alumni","events","career","discounts","groups"].indexOf(S.v)>=0)render()}
+function tz(){try{return(Intl.DateTimeFormat().resolvedOptions().timeZone||"").split("/").pop().replace(/_/g," ")}catch(e){return""}}
+try{var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},2500);fetch("https://get.geojs.io/v1/ip/geo.json",{signal:ctl.signal}).then(function(r){return r.json()}).then(function(j){clearTimeout(t);use(j.city||tz())}).catch(function(){use(tz())})}catch(e){use(tz())}}
+render();detect();
+</script>
+</body>
+</html>
